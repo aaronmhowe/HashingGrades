@@ -28,8 +28,16 @@ public class Students {
             // actualPointsEarned = assignmentGrades
             actualPointsEarned += value.grade;
             // totalPoints = hw1.maxGrade + hw2.maxGrade + ...
-            totalPointsPossible += value.sort.getMaxScore();
+            totalPointsPossible += value.sort.getMaxPoints();
         }
         return actualPointsEarned / totalPointsPossible;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getID() {
+        return id;
     }
 }
