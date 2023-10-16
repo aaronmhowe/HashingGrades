@@ -1,4 +1,7 @@
+
+
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Main class to run the application method
@@ -13,20 +16,13 @@ public class Main {
      * @throws IOException throws when a file cannot be written
      */
     public static void main(String[] args) throws IOException {
-
-//        BufferedReader exam1_Input = new BufferedReader(new FileReader("./exams_1.csv"));
-//        BufferedReader exam2_Input = new BufferedReader(new FileReader("./exams_2.csv"));
-//        BufferedReader homework1_Input = new BufferedReader(new FileReader("./homework_1.csv"));
-//        BufferedReader homework2_Input = new BufferedReader(new FileReader("./homework_2.csv"));
-//        BufferedReader quiz1_Input = new BufferedReader(new FileReader("./quizzes_1.csv"));
-//        BufferedReader quiz2_Input = new BufferedReader(new FileReader("./quizzes_2.csv"));
-//
-//        PrintWriter detailsOutput = new PrintWriter(new FileWriter("./output - details.csv"));
-//        PrintWriter summaryOutput = new PrintWriter(new FileWriter("./output - summary.csv"));
-        args = new String[] {"homework_1.csv", "homework_2.csv" };
+        ArrayList<BufferedReader> fileContents = new ArrayList<>();
 
         for (String arg : args) {
-            System.out.println(arg);
+            BufferedReader input = new BufferedReader(new FileReader(arg));
+            fileContents.add(input);
         }
+        Grades gradeClass = new Grades(fileContents);
+        gradeClass.outputInfo();
     }
 }
