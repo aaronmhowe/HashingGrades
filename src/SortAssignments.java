@@ -1,56 +1,55 @@
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.*;
 
 /**
- * This class serves to calculate the maximum score that can be achieved
- * across each assignment category (homework, quizzes, exams)
+ * This class serves to Properly sort the assignments for appearance on the output file as
+ * ID -> Name -> HW1, HW2, HW3,..., Quiz1, Quiz2,..., Exam1, Exam2,...
  * @author Aaron Howe
  * @version JDK 21
  */
 public class SortAssignments {
-    String assignmentType;
-    // hash table of assignments
-    Hashtable<String, Assignments> assignmentList;
+    ArrayList<String> studentInfo = new ArrayList<>();
 
     /**
-     * Method to return the total possible points for an assignment category
-     * @return the sum of the key, value pairs
+     * SortAssignment Constructor: Sorting the assignment type headers as:
+     * Student Info -> HW -> Quiz -> Exam
+     * @param headers the first line of the csv output
      */
-    public double getMaxPoints() {
-        assignmentList = new Hashtable<>();
-        // enumeration object generates a series of elements
-        // sending those elements to the hashtable object
-        Enumeration<String> keys = assignmentList.keys();
-        double points = 0.0;
-        // searching function for the hash
-        while (keys.hasMoreElements()) {
-            // iterator
-            String key = keys.nextElement();
-            // value of a key
-            Assignments value = assignmentList.get(key);
-            // sum up the total possible points for an assignment category
-            points += value.maxGrade;
+    // HW2,HW1,HW4,HW3,HW6,HW5,HW7,E1,E2,E3,Name,Quiz1,Quiz2,Quiz3,Quiz4,Total,ID
+    // "#ID","Name","HW1","HW2","HW3","HW4","HW5","HW6","HW7","Quiz1","Quiz2","Quiz3","Quiz4","E1","E2","E3"
+    public SortAssignments(List<Object> headers) {
+        Hashtable<String, ArrayList<String>> sorting = new Hashtable<>();
+        // Default headers into final ArrayList
+        studentInfo.add("#ID");
+        studentInfo.add("Name");
+        // loop List of objects
+        for (int i = 0; i < headers.size(); i++) {
+            String value = (String) headers.get(i);
+            // Removing the digits from each assignment name to be sorted
+            String key = value.replaceAll("[0-9]","");
+            if (sorting.containsKey(key)) {
+                sorting.get(key).add(value);
+            } else {
+                ArrayList<String> temp = new ArrayList<>();
+                temp.add(value);
+                sorting.put(key, temp);
+            }
         }
-        // return total possible points
-        return points;
+        // iterating sorting hash table, using collections.sort to sort properly
+        Enumeration<String> iter = sorting.keys();
+        while (iter.hasMoreElements()) {
+            String key = iter.nextElement();
+            Collections.sort(sorting.get(key));
+            studentInfo.addAll(sorting.get(key));
+        }
     }
+
+
 
     /**
      * Getter method to retrieve a specified assignment type for a student (homework, quiz, exam)
      * @return the assignment type key
      */
-    public String getAssignmentType() {
-        return assignmentType;
-    }
-
-    /**
-     * Setter method to set the specified assignment type for a student (homework, quiz, exam)
-     * @return the assignment type value
-     */
-    public Assignments setAssignmentType(Assignments value) {
-        assignmentList = new Hashtable<>();
-        Enumeration<String> key = assignmentList.keys();
-        value = assignmentList.get(key);
-        return value;
+    public ArrayList<String> getStudentInfo() {
+        return studentInfo;
     }
 }
