@@ -117,7 +117,7 @@ public class Grades {
         for (int i = 0; i < newSort.size(); i++) {
             if (i != (newSort.size() - 1)) {
                 detailsOutputFile.print("\"" + (newSort.get(i)) + "\"" + ",");
-            } else {
+            } else if (i == (newSort.size() - 1)){
                 detailsOutputFile.println("\"" + (newSort.get(i)) + "\"");
             }
         }

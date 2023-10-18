@@ -54,6 +54,7 @@ public class Student {
         // sending those elements to the hashtable object
         Enumeration<String> keys = inputGrades.keys();
         Float points = 0.0f;
+        StringBuilder studentGrades = new StringBuilder();
         // searching function for the hash
         while (keys.hasMoreElements()) {
             // iterator
@@ -89,7 +90,12 @@ public class Student {
             totalPoints = getTotalPoints(categories[i]);
             // summing up points earned
             actualPointsEarned += totalPoints;
-            subString.append(String.format("%.6f", totalPoints)).append(",");
+            if (i != categories.length - 1) {
+                subString.append("\"").append(String.format("%.6f", totalPoints)).append("\"").append(",");
+            }
+            if (i == categories.length - 1) {
+                subString.append("\"").append(String.format("%.6f", totalPoints)).append("\"");
+            }
         }
         // calculation for a student's final grade
         finalGrade = (actualPointsEarned / total) * 100.0f;
